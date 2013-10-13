@@ -27,6 +27,7 @@
 #
 
 require 'ostruct'
+require 'set'
 
 module Config
 
@@ -47,7 +48,7 @@ module Config
   BOOLEAN_TRUE_REGEX = /^(true|yes|1)$/i
 
   $_current_section = nil
-  $_overridden = []
+  $_overridden = nil
 
 
   # Loads the config file at the given path into an OpenStruct. A list of overrides can be
@@ -63,7 +64,7 @@ module Config
 
     # Ensure globals are reset
     $_current_section = nil
-    $_overridden = []
+    $_overridden = Set.new
 
     # Normalize overrides to strings -- symbols would be faster, but we're comparing them
     # with strings from the file in the end
@@ -234,7 +235,7 @@ module Config
       config_hash[$_current_section][key] = _coerce_type(value)
     elsif overrides.include?(override)
       config_hash[$_current_section][key] = _coerce_type(value)
-      $_overridden << $_current_section << key
+      $_overridden.add($_current_section + key)
     end
   end
 
