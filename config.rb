@@ -20,6 +20,9 @@
 #     lookups. If using Ruby 2.0, it might be slightly safer to do a module-scoped monkey
 #     patch using refinements.
 #
+#   - This is intended to be a fairly robust solution, so most edge cases should be handled
+#     reasonably well.
+#
 #   - Some basic unit tests for load_config can be found in test_config.rb.
 #
 
